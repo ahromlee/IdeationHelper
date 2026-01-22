@@ -4,6 +4,70 @@
 
 ![Vibe Validator Screenshot](docs/screenshot.png)
 
+## 🔄 워크플로우
+
+```mermaid
+flowchart LR
+    subgraph Phase1["🎯 Phase 1: 페르소나 생성"]
+        A[장르/태그 선택] --> B[Reference 게임 추가]
+        B --> C[Steam 리뷰 수집]
+        C --> D[Pain/Delight 태깅]
+        D --> E[페르소나 도출]
+    end
+    
+    subgraph Phase2["🎨 Phase 2: 크리에이팅"]
+        F[아이디어 입력] --> G[🎮 게임 디렉터]
+        G --> H[📝 컨텐츠]
+        H --> I[⚖️ 밸런스]
+        I --> J[⚙️ 시스템]
+        J --> K[📊 종합]
+    end
+    
+    subgraph Phase3["✅ Phase 3: QA 검증"]
+        L[카테고리별 검증] --> M[이슈 & 개선점]
+        M --> N[최종 점수]
+        N --> O[권장사항]
+    end
+    
+    Phase1 --> Phase2
+    Phase2 --> Phase3
+    
+    style Phase1 fill:#e8f5e9,stroke:#4caf50
+    style Phase2 fill:#fff3e0,stroke:#ff9800
+    style Phase3 fill:#e3f2fd,stroke:#2196f3
+```
+
+```mermaid
+flowchart TB
+    subgraph Input["📥 입력"]
+        I1[게임 아이디어]
+        I2[Reference 게임]
+        I3[컨텍스트 개입]
+    end
+    
+    subgraph AI["🤖 AI 에이전트"]
+        A1[Miner<br/>리뷰 수집]
+        A2[Tagger<br/>태깅]
+        A3[Synthesizer<br/>페르소나]
+        A4[Multi-Agent<br/>크리에이팅]
+        A5[QA Agent<br/>검증]
+    end
+    
+    subgraph Output["📤 출력"]
+        O1[페르소나 카드]
+        O2[기획 문서]
+        O3[검증 리포트]
+    end
+    
+    I1 --> A4
+    I2 --> A1
+    I3 -.->|실시간 반영| AI
+    
+    A1 --> A2 --> A3 --> O1
+    A3 --> A4 --> O2
+    A4 --> A5 --> O3
+```
+
 ## 📋 개요
 
 Vibe Validator는 게임 아이디어를 **Steam 리뷰 데이터**와 **AI 에이전트**를 활용하여 체계적으로 검증하는 도구입니다.
