@@ -1,0 +1,30 @@
+# Vibe Ideation Validator - Configuration
+# preset: free | standard | detailed
+
+preset: "standard"
+
+# === 프리셋별 기본값 (자동 적용) ===
+# free:     리뷰 30개/게임, 외부 무료 모델, Agent 병합
+# standard: 리뷰 100개/게임, Cursor 모델, C+D 병합
+# detailed: 리뷰 300개/게임, 고품질 모델, 전체 분리
+
+# === 수동 오버라이드 (선택) ===
+overrides:
+  reviews_per_game: null        # 숫자 입력 시 프리셋 무시
+  tagging_model: null           # "gemini-flash" | "claude-3.5-sonnet" | "gpt-4o-mini"
+  analysis_model: null          # "claude-3.5-sonnet" | "gpt-4o"
+  merge_agents: null            # true | false
+
+# === Steam API 설정 ===
+steam:
+  language: "korean"            # korean | english | all
+  sentiment_ratio: 0.5          # 긍정:부정 비율 (0.5 = 50:50)
+  recent_months: 6              # 최근 N개월 리뷰만
+
+# === 출력 설정 ===
+output:
+  dir: "./output"
+  raw_reviews: "raw_reviews.jsonl"
+  tagged_reviews: "tagged_reviews.jsonl"
+  personas: "personas.json"
+  report: "report.md"

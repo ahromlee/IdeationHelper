@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Output files (generated data)
+output/
+*.jsonl
+*.json
+!src/data/*.json
+!package.json
+
+# Environment & Secrets
+.env
+.env.local
+.env.*.local
+*.env
+secrets.yaml
+**/api_keys*
+**/credentials*
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Cursor/Editor
+.cursor/
