@@ -72,6 +72,70 @@ flowchart TB
 
 Vibe Validator는 게임 아이디어를 **Steam 리뷰 데이터**와 **AI 에이전트**를 활용하여 체계적으로 검증하는 도구입니다.
 
+## 🤖 AI 에이전트 컨텍스트
+
+각 에이전트는 이전 단계의 결과물을 컨텍스트로 활용하여 점진적으로 분석을 심화합니다.
+
+```mermaid
+flowchart TB
+    subgraph Context["📚 컨텍스트 흐름"]
+        direction TB
+        
+        C1["🎮 Reference 게임\n(Steam AppID)"]
+        C2["📝 Raw Reviews\n(긍정/부정 리뷰 원문)"]
+        C3["🏷️ Tagged Data\n(Pain Points, Delight Points)"]
+        C4["👥 Personas\n(목표, 고통점, 이탈 트리거)"]
+        C5["💡 아이디어\n(사용자 입력)"]
+        C6["📄 기획 문서\n(비전, 기능, 시스템)"]
+        
+        C1 --> C2 --> C3 --> C4
+        C4 --> C6
+        C5 --> C6
+        C6 --> C7["✅ 검증 리포트"]
+    end
+```
+
+| 에이전트 | 입력 컨텍스트 | 출력 | 역할 |
+|----------|---------------|------|------|
+| **Miner** | Steam AppID, 장르 필터 | Raw Reviews (JSONL) | Reference 게임의 리뷰를 수집하고 긍정/부정 비율 조절 |
+| **Tagger** | Raw Reviews | Pain/Delight Tags | 리뷰에서 불만점과 만족점을 추출하여 태깅 |
+| **Synthesizer** | Tagged Data, 장르 | Personas (3-4명) | 태그 분포를 기반으로 타겟 유저 페르소나 도출 |
+| **Game Director** | 아이디어, Personas | Vision, Key Points | 전체 방향성과 핵심 비전 제시 |
+| **Content Designer** | 아이디어, Personas, Vision | Features, Suggestions | 구체적인 기능과 컨텐츠 제안 |
+| **Balance Designer** | 아이디어, Personas, Features | Concerns, Recommendations | 밸런스 관점의 우려사항과 권장사항 |
+| **System Designer** | 아이디어, Personas, Features | Architecture, Components | 기술적 시스템 구조 설계 |
+| **Synthesizer (PM)** | 모든 에이전트 출력 | 종합 의견 | 에이전트 의견을 통합하여 최종 정리 |
+| **QA Agent** | 기획 문서, Personas | 검증 리포트 | 카테고리별 검증 및 개선점 도출 |
+
+### 🔄 컨텍스트 누적 방식
+
+```
+[Phase 1]
+  Miner: Steam API → 리뷰 수집
+  Tagger: 리뷰 + LLM → 태그 추출  
+  Synthesizer: 태그 분포 + 장르 → 페르소나
+  
+[Phase 2]  
+  각 에이전트: 아이디어 + 페르소나 + 이전 에이전트 출력 → 기획
+  
+[Phase 3]
+  QA Agent: 전체 기획 + 페르소나 + 사용자 컨텍스트 → 검증
+```
+
+### 💬 사용자 컨텍스트 개입
+
+사용자가 추가한 컨텍스트는 **모든 후속 LLM 호출**에 포함됩니다:
+
+```
+[사용자 추가 지시사항]
+- "캐주얼 유저 중심으로 분석해줘"
+- "모바일 환경도 고려해줘"
+
+위 사항을 고려해서 분석해주세요.
+```
+
+이를 통해 분석 방향을 실시간으로 조정할 수 있습니다.
+
 ### 주요 기능
 
 - **Phase 1: 페르소나 생성**
